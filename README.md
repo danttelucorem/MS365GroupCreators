@@ -51,14 +51,19 @@ Update-MgBetaDirectorySetting -DirectorySettingId $settingsObjectID -BodyParamet
 
 (Get-MgBetaDirectorySetting -DirectorySettingId $settingsObjectID).Values
 ```
+
 The previous script uses a hash table with a key-value pair contained within the first "@params", that invokes the EnableMSStandardBlockedWords function, which is deprecated.
+
 I have deleted that line, and only left the "templateID" in order to have a reference in case that the group specified in "$GroupName" does not exist.
+
 Then, the main issue is that, if you run this script, the output won't never show the SomeGroup ID since is not going to be able to read it.
+
 The cmdlet "Get-MgBetaGroup" can only return up to 100 element by default, so, is not going to properly associate the restriction to the "SomeGroup" because it won't be able to assign any value to $groupId showing a blank value in GroupCreationAllowedGroupId.
 
 To correct this. an -All parameter must be indicated, in order to retrieve all element in the group list to be read.
 
 NEW SCRIPT:
+
 ```PowerShell
 Import-Module Microsoft.Graph.Beta.Identity.DirectoryManagement
 Import-Module Microsoft.Graph.Beta.Groups
